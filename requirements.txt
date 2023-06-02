@@ -52,3 +52,8 @@ urllib3==2.0.2
 validators==0.20.0
 watchdog==3.0.0
 zipp==3.15.0
+streamlit-ace==0.1.1
+streamlit-card==0.0.4
+streamlit-gradio==2.8.2
+streamlit-option-menu==0.3.2
+streamlit-toggle-switch==1.0.2
