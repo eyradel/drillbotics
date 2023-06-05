@@ -33,6 +33,7 @@ class InterpWell:
         - PchipInterpolator
         - InterpolatedUnivariateSpline
     """
+
     ### - LinearNDInterpolator
     ### - CloughTocher2DInterpolator
     ### - NearestNDInterpolator
@@ -46,55 +47,55 @@ class InterpWell:
         self.station_delta = 10
         self.interpolator = "PchipInterpolator"
         self.units = "meters"
-        self.min_kop = 300
+        self.min_kop = 200
         self.kop = 0
         self.kop_form_aggr = 0.6  # Suitable formation aggresiveness for kickoff
         self.interp_args = {}
+        self.form_aggr = [[0, 0]]
 
-        # Parse inputs
-        self.parse_input()
-
-    def parse_input(self, targets_file=None, form_aggr_file=None):
-        """
-        Parses the input to set the right well parameter
-        Inputs:
-        -------
-            Input files
-
-        Return:
-        -------
-            None
-        """
-        # For now, hard code target coordinates TODO
-        # self.target_coordinates = np.array(
-        #     [
-        #         [238.21, 137.53, 1164.06],
-        #         [337.47, 194.84, 1223.73],
-        #         [759.59, 438.55, 1327.21],
-        #         [1284.59, 741.66, 1677.21],
-        #     ]
-        # )
-
-        # Change surface coordinates to np array
-        # self.surface_coordinates = np.array(self.surface_coordinates)
-
-        # Determines the appropriate kop given the formation aggresiveness
-        # self.form_aggre = [
-        #     [0, 0.5],
-        #     [150, 0.6],
-        #     [400, 0.5],
-        #     [900, 0.8],
-        #     [980, 0.5],
-        #     [1100, 0.6],
-        #     [1200, 0.4],
-        #     [1320, 0.2],
-        #     [1450, 0.6],
-        #     [1530, 0.5],
-        # ]  # For now, hard code TODO
-        for station in self.form_aggre[:]:
+    def suggest_kop(self):
+        for station in self.form_aggr[:]:
             if station[0] >= self.min_kop and station[1] >= self.kop_form_aggr:
                 self.kop = station[0]
                 break
+
+    # def parse_input(self, targets_file=None, form_aggr_file=None):
+    #     """
+    #     Parses the input to set the right well parameter
+    #     Inputs:
+    #     -------
+    #         Input files
+
+    #     Return:
+    #     -------
+    #         None
+    #     """
+    #     # For now, hard code target coordinates TODO
+    #     # self.target_coordinates = np.array(
+    #     #     [
+    #     #         [238.21, 137.53, 1164.06],
+    #     #         [337.47, 194.84, 1223.73],
+    #     #         [759.59, 438.55, 1327.21],
+    #     #         [1284.59, 741.66, 1677.21],
+    #     #     ]
+    #     # )
+
+    #     # Change surface coordinates to np array
+    #     # self.surface_coordinates = np.array(self.surface_coordinates)
+
+    #     # Determines the appropriate kop given the formation aggresiveness
+    #     # self.form_aggre = [
+    #     #     [0, 0.5],
+    #     #     [150, 0.6],
+    #     #     [400, 0.5],
+    #     #     [900, 0.8],
+    #     #     [980, 0.5],
+    #     #     [1100, 0.6],
+    #     #     [1200, 0.4],
+    #     #     [1320, 0.2],
+    #     #     [1450, 0.6],
+    #     #     [1530, 0.5],
+    #     # ]  # For now, hard code TODO
 
     @property
     def output_data(self):
@@ -125,8 +126,6 @@ class InterpWell:
             **self.interp_args
         )
         well_data = _well_data[0] if self.units == "meters" else _well_data[1]
-        targets_data = pd.DataFrame(
-            self.target_coordinates, columns=["X", "Y", "Z"]
-        )
+        targets_data = pd.DataFrame(self.target_coordinates, columns=["X", "Y", "Z"])
 
         return well_data, targets_data
