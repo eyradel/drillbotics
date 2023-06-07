@@ -446,53 +446,19 @@ st.markdown(
 )
 
 
-def streamlit_menu(example=1):
-    if example == 1:
-        with st.sidebar:
-            selected = option_menu(
-                menu_title="Section",
-                options=["well Path", "RSS", "Simulation"],
-                icons=["house", "play"],
-                menu_icon="cast",
-                default_index=0,
-            )
-        return selected
+def streamlit_menu():
+    selected = option_menu(
+        menu_title=None,  # required
+        options=["Well Plan", "Drill String", "Simulation"],  # required
+        icons=["house", "pencil", "play"],  # optional
+        menu_icon="cast",  # optional
+        default_index=0,  # optional
+        orientation="horizontal",
+    )
+    
+    return selected
 
-    if example == 2:
-        selected = option_menu(
-            menu_title=None,  # required
-            options=["Well Plan", "Simulation"],  # required
-            icons=["house", "play"],  # optional
-            menu_icon="cast",  # optional
-            default_index=0,  # optional
-            orientation="horizontal",
-        )
-        return selected
-
-    if example == 3:
-        selected = option_menu(
-            menu_title=None,
-            options=["well Path", "Simulation"],
-            icons=["house", "play"],  # optional
-            menu_icon="cast",  # optional
-            default_index=0,  # optional
-            orientation="horizontal",
-            styles={
-                "container": {"padding": "0!important", "background-color": "#fafafa"},
-                "icon": {"color": "orange", "font-size": "20px"},
-                "nav-link": {
-                    "font-size": "20px",
-                    "text-align": "left",
-                    "margin": "5px",
-                    "--hover-color": "#eee",
-                },
-                "nav-link-selected": {"background-color": "green"},
-            },
-        )
-        return selected
-
-
-selected = streamlit_menu(example=2)
+selected = streamlit_menu()
 
 if selected == "Well Plan":
     inputted_data = well_inputs()
