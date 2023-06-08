@@ -188,12 +188,13 @@ def well_inputs():
             for i in range(int(tr)):
                 try:
                     current_formation = well.form_aggr[i]
+                    current_formation = f"{current_formation[0]},{current_formation[1]}"
                 except IndexError:
                     current_formation = ""
 
                 f = st.sidebar.text_input(
                     f"Formation {i} (Depth,Form_aggr)",
-                    f"{current_formation[0]},{current_formation[1]}",
+                    current_formation
                 )
                 formation_aggr.append(f.split(","))
 
@@ -410,6 +411,23 @@ def disp_plan(well_coords, targets_coords):
         st.dataframe(well_coords)
 
 
+def drillstring():
+    drillstrings = [
+        {"name": "Drillstring 1", "length": 100, "weight": 500},
+        {"name": "Drillstring 2", "length": 200, "weight": 700},
+        {"name": "Drillstring 3", "length": 150, "weight": 600}
+    ]
+
+    current_drillstring = st.sidebar.radio("Select Drillstring", drillstrings)
+
+    st.markdown("---")
+    st.markdown("**Selected Drillstring**")
+    st.markdown(f"**Name:** {current_drillstring['name']}")
+    st.markdown(f"**Length:** {current_drillstring['length']}")
+    st.markdown(f"**Weight:** {current_drillstring['weight']}")
+    st.markdown("---")
+
+
 st.markdown(
     '<link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">',
     unsafe_allow_html=True,
@@ -478,6 +496,10 @@ if selected == "Well Plan":
             disp_plan(gen_well.output_data[0], gen_well.output_data[1])
     else:
         st.header("Enter well data in the side bar and click run")
+
+if selected == "Drill String":
+    drillstring()
+    st.sidebar.button("Select this Drillstring")
 
 if selected == "Simulation":
     simu()
