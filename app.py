@@ -19,7 +19,7 @@ session_state = st.session_state
 
 
 def simu():
-    dac = pd.read_csv(r"C:\Users\eyram\Desktop\uisData.csv")
+    dac = pd.read_csv(r"uisData.csv")
 
     well_inputs_trace = go.Scatter3d(
         x=dac["east"],
