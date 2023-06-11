@@ -5,7 +5,7 @@ import streamlit_toggle as tog
 import pandas as pd
 import numpy as np
 import plotly.graph_objects as go
-
+st.set_page_config(page_title="Drillbotics")
 from drillmodules.well_plan.well import InterpWell
 
 
@@ -407,7 +407,7 @@ def disp_plan(well_coords, targets_coords):
         st.subheader("Three Dimensional[3D]")
         st.plotly_chart(fig3d, use_container_width=True)
 
-    with st.expander("View 2D Graph"):
+    with st.expander("View Data"):
         st.dataframe(well_coords)
 
 
